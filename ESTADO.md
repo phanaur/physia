@@ -118,3 +118,6 @@ Physia.
 - **2026-10-20 (guía de instalación):** se añadió
   `docs/INSTALACION_UBUNTU.md` con la preparación completa de un equipo nuevo,
   ejecución web y escritorio, verificaciones y resolución de fallos habituales.
+- **2026-10-20 (herramienta de desarrollo):** se adoptó `dx` como interfaz
+  principal para servir las variantes web y escritorio. Trunk queda documentado
+  como alternativa específica para la web.

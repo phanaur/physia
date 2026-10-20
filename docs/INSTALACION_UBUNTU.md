@@ -3,8 +3,8 @@
 Esta guía prepara un equipo nuevo para desarrollar y ejecutar Physia en web y
 escritorio. Los comandos están pensados para Ubuntu 26.04 de 64 bits.
 
-No ejecutes `cargo`, `rustup` ni `trunk` con `sudo`. Rust se instala para tu
-usuario y guarda sus herramientas en `~/.cargo/bin`.
+No ejecutes `cargo`, `rustup`, `dx` ni `trunk` con `sudo`. Rust se instala para
+tu usuario y guarda sus herramientas en `~/.cargo/bin`.
 
 ## 1. Instalar herramientas y bibliotecas del sistema
 
@@ -66,7 +66,37 @@ rustup target list --installed
 
 La última salida debe incluir `wasm32-unknown-unknown`.
 
-## 3. Instalar Trunk para la versión web
+## 3. Instalar la herramienta de Dioxus
+
+Physia utiliza `dx` como orden principal para desarrollar tanto la versión web
+como la de escritorio. Dioxus recomienda su instalador de binarios porque evita
+compilar la propia herramienta:
+
+```sh
+curl -sSL https://dioxus.dev/install.sh | bash
+source ~/.cargo/env
+hash -r
+dx --version
+```
+
+La versión debe pertenecer a la serie 0.7. Como alternativa, puedes compilar la
+herramienta desde el código publicado en crates.io; este proceso tarda bastante
+más:
+
+```sh
+cargo install --locked dioxus-cli --version '^0.7'
+```
+
+Comprueba el entorno que detecta Dioxus:
+
+```sh
+dx doctor
+```
+
+### Trunk como herramienta web alternativa
+
+Trunk no es necesario para el uso normal de Physia. Se conserva como alternativa
+para servir o empaquetar únicamente la versión web:
 
 ```sh
 cargo install --locked trunk
@@ -125,22 +155,21 @@ La primera ejecución tarda más porque Cargo descarga y compila las dependencia
 
 ```sh
 cd ~/github/physia/apps/physia
-trunk serve --open
+dx serve --web
 ```
 
-Trunk muestra en la terminal la dirección local. Si el navegador no se abre
-automáticamente, abre la URL que indique, normalmente
-`http://127.0.0.1:8080/`. Mantén esa terminal abierta mientras uses la web y
+`dx` muestra en la terminal la dirección local. Ábrela en el navegador si este
+no se abre automáticamente. Mantén esa terminal abierta mientras uses la web y
 detén el servidor con `Ctrl+C`.
 
-Para comprobar una compilación optimizada sin iniciar el servidor:
+Para obtener una compilación web optimizada sin iniciar el servidor:
 
 ```sh
 cd ~/github/physia/apps/physia
-trunk build --release
+dx build --web --release
 ```
 
-El resultado se genera en `apps/physia/dist/` y no se guarda en Git.
+Los artefactos generados no se guardan en Git.
 
 ## 7. Comprobar y ejecutar la versión de escritorio
 
@@ -151,10 +180,11 @@ cd ~/github/physia
 cargo check --package physia --locked --no-default-features --features desktop
 ```
 
-Después abre la aplicación:
+Después abre la aplicación con la misma herramienta utilizada para la web:
 
 ```sh
-cargo run --package physia --locked --no-default-features --features desktop
+cd ~/github/physia/apps/physia
+dx serve --desktop
 ```
 
 La primera compilación de escritorio puede tardar bastante. Las siguientes
@@ -168,26 +198,39 @@ Estos comandos deben funcionar:
 git --version
 rustc --version
 cargo --version
-trunk --version
+dx --version
 pkg-config --modversion glib-2.0
 pkg-config --modversion webkit2gtk-4.1
 ```
+
+`trunk --version` también debe funcionar si instalaste la alternativa Trunk del
+apartado 3.
 
 Después deben abrirse las dos variantes:
 
 ```sh
 cd ~/github/physia/apps/physia
-trunk serve --open
+dx serve --web
 ```
 
-Detén Trunk con `Ctrl+C` antes de ejecutar:
+Detén el servidor web con `Ctrl+C` antes de ejecutar:
 
 ```sh
-cd ~/github/physia
-cargo run --package physia --locked --no-default-features --features desktop
+cd ~/github/physia/apps/physia
+dx serve --desktop
 ```
 
 ## Problemas habituales
+
+### `dx: orden no encontrada`
+
+```sh
+source ~/.cargo/env
+hash -r
+dx --version
+```
+
+Si sigue sin existir, repite el instalador de Dioxus del apartado 3.
 
 ### `trunk: orden no encontrada`
 
@@ -225,7 +268,7 @@ Elige otro puerto:
 
 ```sh
 cd ~/github/physia/apps/physia
-trunk serve --open --port 8081
+dx serve --web --port 8081
 ```
 
 ## Referencias
@@ -233,3 +276,4 @@ trunk serve --open --port 8081
 - [Instalación oficial de Rust](https://www.rust-lang.org/tools/install)
 - [Instalación oficial de Trunk](https://trunk-rs.github.io/trunk/guide/getting-started/installation.html)
 - [Preparación de Dioxus 0.7](https://dioxuslabs.com/learn/0.7/getting_started/)
+- [Herramientas de Dioxus 0.7](https://dioxuslabs.com/learn/0.7/guides/tools/)

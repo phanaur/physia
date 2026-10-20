@@ -45,26 +45,26 @@ integración de experimentos.
 Para preparar un ordenador desde cero, sigue la
 [guía completa para Ubuntu 26.04](docs/INSTALACION_UBUNTU.md).
 
-Requiere Rust, el objetivo WebAssembly y Trunk:
+Requiere Rust, el objetivo WebAssembly y la herramienta de Dioxus:
 
 ```sh
 rustup target add wasm32-unknown-unknown
+curl -sSL https://dioxus.dev/install.sh | bash
+cd ~/github/physia/apps/physia
+dx serve --web
+```
+
+Para ejecutar la misma aplicación como programa de escritorio:
+
+```sh
+cd ~/github/physia/apps/physia
+dx serve --desktop
+```
+
+Trunk permanece disponible como alternativa exclusiva para web:
+
+```sh
 cargo install --locked trunk
-cd apps/physia
-trunk serve --open
-```
-
-Si una terminal abierta antes de instalar Trunk todavía no encuentra el comando:
-
-```sh
-source ~/.cargo/env
-hash -r
-trunk --version
-```
-
-También puede compilarse desde `apps/physia` con:
-
-```sh
 trunk build --release --locked
 ```
 
