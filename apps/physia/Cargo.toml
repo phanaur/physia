@@ -1,0 +1,16 @@
+[package]
+name = "physia"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+dioxus = { version = "0.7", default-features = false, features = ["lib", "launch"] }
+web-sys = { version = "0.3", optional = true, features = ["Location"] }
+
+[features]
+default = ["web"]
+web = ["dioxus/web", "dep:web-sys"]
+desktop = ["dioxus/desktop"]

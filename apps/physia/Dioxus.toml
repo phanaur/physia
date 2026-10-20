@@ -1,0 +1,5 @@
+[application]
+name = "Physia"
+
+[web.app]
+title = "Physia · Laboratorio virtual"
