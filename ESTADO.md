@@ -112,3 +112,6 @@ Physia.
   pruebas, Clippy, WebAssembly, empaquetado de producción y navegación visual.
   La variante de escritorio queda condicionada a instalar GLib/GTK y WebKitGTK
   en el sistema de desarrollo.
+- **2026-10-20 (entorno local):** se documentó la instalación de Trunk y de las
+  dependencias de escritorio para Ubuntu 26.04, incluida la recarga del entorno
+  de Cargo cuando una terminal aún no encuentra `trunk`.

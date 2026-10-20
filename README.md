@@ -44,9 +44,17 @@ Requiere Rust, el objetivo WebAssembly y Trunk:
 
 ```sh
 rustup target add wasm32-unknown-unknown
-cargo install trunk --locked
+cargo install --locked trunk
 cd apps/physia
 trunk serve --open
+```
+
+Si una terminal abierta antes de instalar Trunk todavía no encuentra el comando:
+
+```sh
+source ~/.cargo/env
+hash -r
+trunk --version
 ```
 
 También puede compilarse desde `apps/physia` con:
@@ -82,6 +90,13 @@ Puede requerir paquetes de desarrollo de WebKitGTK y otras bibliotecas del
 sistema en Linux. En el equipo usado para crear el repositorio, la comprobación
 se detiene porque `pkg-config` no encuentra `glib-2.0.pc`; la versión web no se
 ve afectada.
+
+En Ubuntu 26.04 se preparan con:
+
+```sh
+sudo apt update
+sudo apt install libglib2.0-dev libwebkit2gtk-4.1-dev build-essential curl wget file libxdo-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev lld
+```
 
 ## Licencia
 
