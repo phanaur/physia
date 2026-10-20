@@ -18,6 +18,8 @@ Antes de trabajar, lee:
 3. [PLAN.md](PLAN.md): hoja de ruta revisable.
 4. [Guía de desarrollo](docs/GUIA_DE_DESARROLLO.md): arquitectura, migración,
    experimentos, teoría, pruebas y diagramas.
+5. [Instalación en Ubuntu 26.04](docs/INSTALACION_UBUNTU.md): preparación
+   completa de web y escritorio en un equipo nuevo.
 
 El plan y la guía no autorizan automáticamente sus siguientes tareas.
 
@@ -39,6 +41,9 @@ Las crates compartidas se crearán cuando aparezca una necesidad real durante la
 integración de experimentos.
 
 ## Ejecutar en la web
+
+Para preparar un ordenador desde cero, sigue la
+[guía completa para Ubuntu 26.04](docs/INSTALACION_UBUNTU.md).
 
 Requiere Rust, el objetivo WebAssembly y Trunk:
 

@@ -115,3 +115,6 @@ Physia.
 - **2026-10-20 (entorno local):** se documentó la instalación de Trunk y de las
   dependencias de escritorio para Ubuntu 26.04, incluida la recarga del entorno
   de Cargo cuando una terminal aún no encuentra `trunk`.
+- **2026-10-20 (guía de instalación):** se añadió
+  `docs/INSTALACION_UBUNTU.md` con la preparación completa de un equipo nuevo,
+  ejecución web y escritorio, verificaciones y resolución de fallos habituales.
