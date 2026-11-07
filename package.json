@@ -1,0 +1,27 @@
+{
+  "name": "physia",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "engines": {
+    "node": ">=26.13.0"
+  },
+  "packageManager": "npm@11.20.0",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5180 --strictPort",
+    "check": "vue-tsc --noEmit",
+    "test": "node --test \"src/**/*.test.ts\"",
+    "build": "npm run check && vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 5182 --strictPort"
+  },
+  "dependencies": {
+    "vue": "3.5.45"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.6",
+    "@vitejs/plugin-vue": "6.0.10",
+    "typescript": "6.0.3",
+    "vite": "8.3.6",
+    "vue-tsc": "3.3.14"
+  }
+}

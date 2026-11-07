@@ -1,0 +1,19 @@
+# Dependencies and generated application files
+node_modules/
+/dist/
+/artifacts/
+/coverage/
+
+# Future editorial outputs
+**/_site/
+**/_book/
+**/.quarto/
+
+# Local environment, editors and system files
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+.idea/
+.vscode/
