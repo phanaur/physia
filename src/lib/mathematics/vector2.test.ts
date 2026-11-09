@@ -2,10 +2,10 @@ import { test } from 'node:test';
 import { notStrictEqual, ok, strictEqual, throws } from 'node:assert';
 import { Vector2 } from './vector2.ts';
 
-test('A vector with components 3 and 4 has length 5', function () {
+test('A vector with components 3 and 4 has magnitude 5', function () {
     const vector = new Vector2(3, 4);
 
-    strictEqual(vector.length(), 5);
+    strictEqual(vector.magnitude(), 5);
 });
 
 test('Two vectors, (3, 4) and (2, -1) when added result in the vector (5, 3)', function () {
@@ -109,9 +109,9 @@ test('the dot product of vector (3, 4) and vector (2, -1) is 2', function () {
     strictEqual(result, 2);
 });
 
-test('vector (3, 4) has a squared length of 25', function () {
+test('vector (3, 4) has a squared magnitude of 25', function () {
     const vector = new Vector2(3, 4);
-    const result = vector.lengthSquared();
+    const result = vector.magnitudeSquared();
 
     strictEqual(result, 25);
 });
@@ -238,16 +238,16 @@ test('Dot products handle orthogonal, opposite and zero vectors and are symmetri
     strictEqual(other.y, 5);
 });
 
-test('Lengths handle zero, axis-aligned, negative and fractional components', function () {
-    strictEqual(new Vector2(0, 0).length(), 0);
-    strictEqual(new Vector2(0, 0).lengthSquared(), 0);
-    strictEqual(new Vector2(-3, -4).length(), 5);
-    strictEqual(new Vector2(-3, -4).lengthSquared(), 25);
-    strictEqual(new Vector2(-7, 0).length(), 7);
-    strictEqual(new Vector2(0, -7).length(), 7);
-    assertNear(new Vector2(0.3, 0.4).length(), 0.5);
-    assertNear(new Vector2(0.3, 0.4).lengthSquared(), 0.25);
-    assertNear(new Vector2(1, 1).length(), Math.sqrt(2));
+test('Magnitudes handle zero, axis-aligned, negative and fractional components', function () {
+    strictEqual(new Vector2(0, 0).magnitude(), 0);
+    strictEqual(new Vector2(0, 0).magnitudeSquared(), 0);
+    strictEqual(new Vector2(-3, -4).magnitude(), 5);
+    strictEqual(new Vector2(-3, -4).magnitudeSquared(), 25);
+    strictEqual(new Vector2(-7, 0).magnitude(), 7);
+    strictEqual(new Vector2(0, -7).magnitude(), 7);
+    assertNear(new Vector2(0.3, 0.4).magnitude(), 0.5);
+    assertNear(new Vector2(0.3, 0.4).magnitudeSquared(), 0.25);
+    assertNear(new Vector2(1, 1).magnitude(), Math.sqrt(2));
 });
 
 test('Normalization preserves direction in every quadrant and on both axes', function () {
@@ -270,13 +270,13 @@ test('Normalization preserves direction in every quadrant and on both axes', fun
         notStrictEqual(result, vector);
         assertNear(result.x, expectedX);
         assertNear(result.y, expectedY);
-        assertNear(result.length(), 1);
+        assertNear(result.magnitude(), 1);
         strictEqual(vector.x, x);
         strictEqual(vector.y, y);
     }
 });
 
-test('Normalizing an already unit-length vector still returns a new instance', function () {
+test('Normalizing an already unit-magnitude vector still returns a new instance', function () {
     const vector = new Vector2(1, 0);
     const result = vector.normalize();
 
@@ -294,11 +294,11 @@ test('Zero vectors normalize to null regardless of the signs of their zero compo
     strictEqual(new Vector2(-0, -0).normalize(), null);
 });
 
-test('Length and normalization avoid intermediate square overflow and underflow', function () {
-    // Regression cases for the choice of hypot rather than sqrt(lengthSquared()).
+test('Magnitude and normalization avoid intermediate square overflow and underflow', function () {
+    // Regression cases for the choice of hypot rather than sqrt(magnitudeSquared()).
     for (const magnitude of [1e200, 1e-200]) {
         const vector = new Vector2(magnitude, 0);
-        strictEqual(vector.length(), magnitude);
+        strictEqual(vector.magnitude(), magnitude);
 
         const result = vector.normalize();
         ok(result instanceof Vector2);
@@ -309,10 +309,10 @@ test('Length and normalization avoid intermediate square overflow and underflow'
     }
 });
 
-test('Normalization returns null when the computed length exceeds the number range', function () {
+test('Normalization returns null when the computed magnitude exceeds the number range', function () {
     const vector = new Vector2(Number.MAX_VALUE, Number.MAX_VALUE);
 
-    strictEqual(vector.length(), Infinity);
+    strictEqual(vector.magnitude(), Infinity);
     strictEqual(vector.normalize(), null);
     strictEqual(vector.x, Number.MAX_VALUE);
     strictEqual(vector.y, Number.MAX_VALUE);

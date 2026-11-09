@@ -61,21 +61,21 @@ export class Vector2 {
     }
 
     /** Returns x squared plus y squared; this calculation may overflow or underflow. */
-    lengthSquared(): number {
+    magnitudeSquared(): number {
         return Math.pow(this.x, 2) + Math.pow(this.y, 2);
     }
 
-    /** Computes the Euclidean length with hypot to avoid unnecessary intermediate overflow or underflow. */
-    length(): number {
+    /** Computes the Euclidean magnitude with hypot to avoid unnecessary intermediate overflow or underflow. */
+    magnitude(): number {
         return Math.hypot(this.x, this.y);
     }
 
     /**
-     * Returns a new vector divided by its computed length.
-     * Returns null if that length is zero or non-finite.
+     * Returns a new vector divided by its computed magnitude.
+     * Returns null if that magnitude is zero or non-finite.
      */
     normalize():Vector2 | null {
-        const length = this.length();
-        return Number.isFinite(length) && length > 0 ? this.divide(length) : null;
+        const magnitude = this.magnitude();
+        return Number.isFinite(magnitude) && magnitude > 0 ? this.divide(magnitude) : null;
     }
 }

@@ -1,6 +1,6 @@
 # Estado de Physia
 
-Última actualización: 2026-11-07.
+Última actualización: 2026-11-09.
 
 ## Fase activa
 
@@ -9,7 +9,8 @@ de Vue, la portada y `Vector2` con sus pruebas. Falta la revisión completa de l
 portada en el navegador (secciones inferiores, teclado y vista estrecha). Todavía no
 hay estructura de carpetas definitiva ni enrutador. El primer experimento es la
 composición de fuerzas (4.º ESO). Su alcance físico y de interacción está acordado
-(ver «Primer experimento»); todavía no hay código del modelo.
+(ver «Primer experimento»). El modelo tiene ya la resultante y el peso (ver
+«Implementado»); faltan la normal y la aceleración.
 
 ## Decisiones confirmadas
 
@@ -99,8 +100,8 @@ Pendiente de decidir:
 - Valor y orientación por defecto de una fuerza nueva, evitando que las flechas se
   solapen.
 - Si «¡Equilibrio completo!» se muestra también en la escena inicial.
-- Estructura de carpetas del modelo. Provisional: `src/lib/physics/forces.ts` y
-  `forces.test.ts`, junto a `src/lib/mathematics/`.
+- Estructura de carpetas del modelo. Provisional y ya en uso: `src/lib/physics/`
+  (`forces.ts` y `forces.test.ts`), junto a `src/lib/mathematics/`.
 
 ## Aparcado: explorador de campos (Bachillerato)
 
@@ -141,24 +142,35 @@ queda en el repositorio anterior. Las decisiones siguen vigentes:
   tarjetas no abren experimentos. La tarjeta del campo eléctrico sigue como
   «Primer experimento» y hay que cambiarla al elegir el tema de 4.º ESO.
 - `Vector2` (`x` e `y` `readonly`; `add`, `subtract`, `multiply`, `divide`, `dot`,
-  `lengthSquared`, `length` y `normalize`), con 27 pruebas con `node:test`. Es copia
-  exacta de la base anterior.
+  `magnitudeSquared`, `magnitude` y `normalize`), con 27 pruebas con `node:test`.
+  Viene de la base anterior, con `length` y `lengthSquared` renombrados a
+  `magnitude` y `magnitudeSquared` el 2026-11-09: en inglés, `module` designa un
+  módulo de código y no el módulo de un vector.
+- Modelo de fuerzas en `src/lib/physics/forces.ts`, escrito por el usuario con
+  tutoría y con 8 pruebas en `forces.test.ts` (35 en total):
+  - `resultantForce(forces)`: suma vectorial de una lista de fuerzas en newtons.
+    Lista vacía da el vector cero.
+  - `weight(mass, gravity)`: `P = m·g`, con masa en kg y gravedad en m/s². La
+    gravedad es un parámetro, de modo que el signo no vive en la fórmula. Lanza
+    `RangeError` si la masa no es finita o no es mayor que cero (incluido `-0`), y
+    si el peso se desborda.
+  - `DEFAULT_GRAVITY = Vector2(0, -9.81)`: dato de la escena para el sistema de
+    referencia con x a la derecha e y hacia arriba.
+  - Sin comprobación de unidades: se documenta en los comentarios de cada función.
 
 ## Última comprobación
 
-2026-11-07, con Node 26.13.0 y npm 11.20.0, sobre el código final con la paleta
-nueva: `npm run build` (incluye la comprobación de tipos) y `npm test` correctos,
-con 27 de 27 pruebas. El usuario revisó la portada en el navegador y funciona como
-se espera. Sin revisar: teclado y foco visible.
+2026-11-09, con Node 26.13.0 y npm 11.20.0: `npm run check`, `npm test` (35 de 35
+pruebas) y `npm run build` correctos. El usuario revisó la portada en el navegador
+el 2026-11-07 y funciona como se espera. Sin revisar: teclado y foco visible.
 
 ## Siguiente paso
 
 1. Terminar la revisión de la portada en el navegador (secciones inferiores,
    teclado, foco visible, enlaces con `#` y vista estrecha).
-2. Primera pieza del modelo, que escribe el usuario con tutoría: la resultante de
-   una lista de fuerzas (`Vector2` en newtons; lista vacía da el vector cero), con
-   pruebas de 3 N y 4 N perpendiculares (5 N), fuerzas iguales y opuestas (cero) y
-   lista vacía. Después, una pieza por paso: peso, normal y aceleración.
+2. Siguiente pieza del modelo, que escribe el usuario con tutoría: la normal,
+   `N = max(0, -(S·n̂))`, con la normal saliente `n̂ = (0, 1)` como segundo dato de
+   la escena y el producto escalar (`dot`). Después, la aceleración `a = R/m`.
 3. Antes de la primera interfaz interactiva: decidir enrutador, estructura de
    carpetas y ESLint con accesibilidad.
 4. Al tener el experimento, cambiar la tarjeta del catálogo de la portada.
